@@ -1,0 +1,8 @@
+apiVersion: v2
+name: microservices
+description: A Helm chart for Be Bouncy microservices (stats, posts, export)
+type: application
+version: 0.1.0
+appVersion: "1.9.9"
+maintainers:
+  - name: Be Bouncy Team

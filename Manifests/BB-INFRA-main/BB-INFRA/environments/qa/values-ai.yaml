@@ -1,0 +1,52 @@
+# QA-specific values for AI
+replicaCount: 1
+
+image:
+  repository: ghcr.io/be-bouncy-wwd/ai
+  tag: "969827f"
+  pullPolicy: Always
+
+imagePullSecrets:
+  - name: ghcr-secret
+
+service:
+  type: ClusterIP
+  port: 3006
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  hosts:
+    - host: ai.qa.bebouncy.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - hosts:
+        - ai.qa.bebouncy.com
+      secretName: ai-qa-tls
+
+resources:
+  limits:
+    cpu: 300m
+    memory: 384Mi
+  requests:
+    cpu: 150m
+    memory: 192Mi
+
+autoscaling:
+  enabled: false
+
+config:
+  env: qa
+  logLevel: debug
+
+envFrom:
+  - secretRef:
+      name: ai-secrets
+
+httpRoute:
+  enabled: false

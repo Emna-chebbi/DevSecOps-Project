@@ -1,0 +1,60 @@
+# QA-specific values for Microservices
+replicaCount: 1
+
+image:
+  repository: ghcr.io/be-bouncy-wwd/microservices
+  tag: "091fff2"
+  pullPolicy: Always
+
+imagePullSecrets:
+  - name: ghcr-secret
+
+service:
+  type: ClusterIP
+  port: 3007
+
+resources:
+  limits:
+    cpu: 300m
+    memory: 384Mi
+  requests:
+    cpu: 150m
+    memory: 192Mi
+
+autoscaling:
+  enabled: false
+
+livenessProbe:
+  exec:
+    command:
+      - node
+      - -e
+      - "require('fs').statSync('/proc/1/status')"
+  initialDelaySeconds: 30
+  periodSeconds: 30
+  timeoutSeconds: 5
+  failureThreshold: 3
+
+readinessProbe:
+  exec:
+    command:
+      - node
+      - -e
+      - "require('fs').statSync('/proc/1/status')"
+  initialDelaySeconds: 20
+  periodSeconds: 10
+  timeoutSeconds: 3
+  failureThreshold: 3
+
+config:
+  env: qa
+  statsEnabled: true
+  postsEnabled: true
+  exportEnabled: true
+
+envFrom:
+  - secretRef:
+      name: microservices-secrets
+
+httpRoute:
+  enabled: false

@@ -1,0 +1,4 @@
+Prometheus rules have been deployed.
+
+The PrometheusRule {{ include "monitoring.fullname" . }} has been created.
+Verify with: kubectl get prometheusrule -n {{ .Release.Namespace }}

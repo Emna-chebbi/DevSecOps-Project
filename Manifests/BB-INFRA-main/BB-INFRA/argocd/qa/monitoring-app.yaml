@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: monitoring-qa
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    environment: qa
+    component: monitoring
+spec:
+  project: default
+  sources:
+    # Source 1: the Helm chart from prometheus-community
+    - repoURL: https://prometheus-community.github.io/helm-charts
+      chart: kube-prometheus-stack
+      targetRevision: "61.7.2"
+      helm:
+        valueFiles:
+          - $values/BB-INFRA/environments/qa/values-monitoring.yaml
+    # Source 2: BB-INFRA values
+    - repoURL: https://github.com/BE-BOUNCY-WWD/BB-INFRA.git
+      targetRevision: main
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+      - ApplyOutOfSyncOnly=true

@@ -1,0 +1,8 @@
+apiVersion: v2
+name: api
+description: A Helm chart for Be Bouncy API service
+type: application
+version: 0.1.0
+appVersion: "2.51.2"
+maintainers:
+  - name: Be Bouncy Team
