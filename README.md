@@ -148,4 +148,4 @@ Alerts are sent via **SMTP (OVH email relay)**.
 
 ## Demo
 
-👉 [Watch Demo Video](https://drive.google.com/file/d/1cB8bRrsqwtdMaiBejDFC4ikH2MSD-YG0/view?usp=sharing)
+👉 [Watch Demo Video](https://drive.google.com/file/d/1-xOuCM41jrCEWRJ25_AfS3UmudnTWNkb/view?usp=sharing)
